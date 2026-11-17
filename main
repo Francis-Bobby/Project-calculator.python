@@ -1,0 +1,80 @@
+#pyhton 3 calculator project
+#defining operations 
+def add(a,b):
+    return a+b
+def sub(a,b):
+    return a-b
+def mul(a,b):
+    return a*b
+def div(a,b):
+    if b == 0:
+            return "Error: cannot divide by zero"
+    return a/b
+def pow(a,b):
+    return a**b
+def modulo(a,b):
+    if b == 0:
+            return "Error: cannot divide by zero"
+    return a%b
+
+#dictionary for functions
+    
+Operations={"+":add,
+    "-":sub,
+"*":mul,
+"/":div,
+"**":pow,
+"%":modulo}
+
+#inputs
+
+def get_number(prompt):
+    """Keep asking until the user enters a valid number."""
+    while True:
+        try:
+            return float(input(prompt))
+        except ValueError:
+            print("  That's not a valid number. Try again.")
+
+#History
+
+def show_history(History):
+    if not History:
+        print("no calculations yet")
+        return
+    for i , entry in enumerate(History, start=1):
+        print(f" {i}. {entry}")
+
+#main
+
+def main():
+    History=[]
+    print("python_calculator")
+    print("Operations:+,-,*,/,%,**")
+    print("Type 'h' for History ,'q' for quit.\n")
+
+    while True:                        # main program loop
+        op = input("Operator (or h/q): ").strip().lower()
+
+        if op=="q":
+            print("Goodbye!")
+            break
+        elif op=="h":
+            show_history(History)
+            continue
+        elif op not in Operations:
+            print("Unknown operator. Try again.")
+            continue
+
+        a= get_number("First number: ")
+        b= get_number("Second number: ")
+        
+        result= Operations[op](a,b)
+        entry= f"{a} {op} {b} ={result}"
+        print(f" Result= {result}")
+        
+        if not (isinstance(result, str) and result.startswith("Error")):
+                History.append(entry)
+
+if __name__ == "__main__":
+    main()
